@@ -1,9 +1,16 @@
 const express = require('express')
 const routes = require('./routes/api')
 const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
 
 // set up express app
 const app = express()
+
+// connect to mongodb
+mongoose.connect("mongodb://localhost/ninjago", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
 
 // middleware
 // its going to parse the json data for us. Attach it to the request object so by the time
