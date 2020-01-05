@@ -12,6 +12,9 @@ mongoose.connect("mongodb://localhost/ninjago", {
   useUnifiedTopology: true
 })
 
+// serve this static file from the public folder
+app.use(express.static('public'))
+
 // middleware
 // its going to parse the json data for us. Attach it to the request object so by the time
 // it reaches our route handler it will have access to it

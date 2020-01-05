@@ -14,14 +14,21 @@ router.get('/ninjas', function(req, res, next){
 router.get('/ninjas', function(req, res, next){
   Ninja.aggregate()
     .near({
-      near: [parseFloat(req.query.lng), parseFloat(req.query.lat)],
+      near: {
+        type: 'Point',
+        coordinates: [parseFloat(req.query.lng), parseFloat(req.query.lat)]
+      },
       maxDistance: 100000,
       spherical: true,
-      distanceField: "dist.calculated"
+      distanceField: 'dis'
     })
     .then(function(ninjas) {
-      res.send(ninjas);
-    });
+        if (ninjas.length === 0)
+        return res.send({
+          message: 'max distance is too big or small'
+        })
+        res.send(ninjas)  
+    }).catch(next)
 })
 
 // add new ninja to the db
