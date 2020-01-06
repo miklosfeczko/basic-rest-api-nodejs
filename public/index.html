@@ -18,5 +18,35 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.7.7/babel.min.js"></script>
     <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+
+    <!-- Create React Component -->
+    <script type="text/babel">
+
+    var Ninjas = React.createClass({
+      render: function(){
+        return(
+          <div id="ninja-container">
+            <form id="search" onSubmit={this.handleSubmit}>
+              <label>Enter your latitude</label>
+              <input type="text" ref="lat" placeholder="latitude" required /> 
+              <label>Enter your longitude</label>
+              <input type="text" ref="lng" placeholder="longitude" required /> 
+              <input type="submit" value="Find Ninjas" />
+            </form>
+            <ul></ul>
+          </div>
+        )
+      },
+      handleSubmit: function(e){
+        e.preventDefault()
+        var lng = this.refs.lng.value
+        var lat = this.refs.lat.value
+
+        fetch('/api/ninjas?lng=' + lng + '&lat=' + lat).then(function(data){
+          return data.json()
+        })
+      }
+    })
+    </script>
 </body>
 </html>
